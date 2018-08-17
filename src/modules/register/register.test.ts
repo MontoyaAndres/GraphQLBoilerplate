@@ -1,8 +1,8 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { request } from "graphql-request";
 
-import { User } from "../entity/User";
-import { startServer } from "../startServer";
+import { startServer } from "../../startServer";
+import { User } from "../../entity/User";
 
 let getHost = () => "";
 
@@ -13,7 +13,7 @@ beforeAll(async () => {
 });
 
 const email = "bob@bob.com";
-const password = "sdasda1";
+const password = "121321";
 
 const mutation = `
   mutation {
@@ -23,14 +23,11 @@ const mutation = `
 
 test("Register user", async () => {
   const response = await request(getHost(), mutation);
-  // expect a user created
   expect(response).toEqual({ register: true });
 
-  // if the user exists
   const users = await User.find({ where: { email } });
   expect(users).toHaveLength(1);
 
-  // if the user has the right data
   const user = users[0];
   expect(user.email).toEqual(email);
   expect(user.password).not.toEqual(password);
