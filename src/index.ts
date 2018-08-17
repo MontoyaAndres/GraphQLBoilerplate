@@ -1,10 +1,5 @@
 import "reflect-metadata";
-import { GraphQLServer } from "graphql-yoga";
-import { resolvers } from "./resolvers";
-import { createConnection } from "typeorm";
+import { startServer } from "./startServer";
 
-const server = new GraphQLServer({ typeDefs: "src/schema.graphql", resolvers });
-createConnection().then(() => {
-  server.start(() => console.log("Server is running on localhost:4000"));
-});
-// https://www.youtube.com/watch?v=23w8PSHwep0&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V&index=6
+startServer();
+// https://www.youtube.com/watch?v=4i3W6g_u1Nw&index=8&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V&pbjreload=10

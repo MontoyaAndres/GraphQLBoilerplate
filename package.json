@@ -26,8 +26,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts",
-    "test": "jest --detectOpenHandles",
+    "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
     "types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
   },
   "jest": {
