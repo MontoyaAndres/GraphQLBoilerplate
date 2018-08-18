@@ -56,16 +56,16 @@ export const resolvers: ResolveMap = {
           }
         ];
       }
-      const hashedPassowrd = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = User.create({
         email,
-        password: hashedPassowrd
+        password: hashedPassword
       });
 
       await user.save();
 
-      const link = await createConfimEmailLink(url, user.id, redis);
+      await createConfimEmailLink(url, user.id, redis);
 
       return null;
     }
