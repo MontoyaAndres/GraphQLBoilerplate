@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=PNuRpf3p_vA&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V&index=17
+
 **update all packages "Yarn"**
 - yarn upgrade --latest
 

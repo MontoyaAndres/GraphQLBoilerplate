@@ -27,7 +27,13 @@ hello: string | null;
 
 interface IMutation {
 __typename: "Mutation";
+login: Array<IError>;
 register: Array<IError>;
+}
+
+interface ILoginOnMutationArguments {
+email: string;
+password: string;
 }
 
 interface IRegisterOnMutationArguments {
