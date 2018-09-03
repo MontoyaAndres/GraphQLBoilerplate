@@ -1,5 +1,6 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { request } from "graphql-request";
+import { Connection } from "typeorm";
 
 import { User } from "../../entity/User";
 import {
@@ -10,7 +11,7 @@ import {
 } from "./errorMessages";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 
-const email: string = "bob@bob.com";
+const email: string = "bob2@bob.com";
 const password: string = "121321";
 
 const mutation = (e: string, p: string) => `
@@ -22,8 +23,14 @@ const mutation = (e: string, p: string) => `
   }
 `;
 
+let conn: Connection;
+
 beforeAll(async () => {
-	await createTypeormConn();
+	conn = await createTypeormConn();
+});
+
+afterAll(async () => {
+	conn.close();
 });
 
 describe("Register user", () => {

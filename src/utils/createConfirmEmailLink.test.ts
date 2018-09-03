@@ -1,6 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import fetch from "node-fetch";
 import * as Redis from "ioredis";
+import { Connection } from "typeorm";
 
 import { createConfimEmailLink } from "./createConfirmEmailLink";
 import { createTypeormConn } from "./createTypeormConn";
@@ -9,14 +10,20 @@ import { User } from "../entity/User";
 let userId: string;
 const redis = new Redis();
 
+let conn: Connection;
+
 beforeAll(async () => {
-	await createTypeormConn();
+	conn = await createTypeormConn();
 	const user = await User.create({
 		email: "bob5@bob.com",
 		password: "2312312"
 	}).save();
 
 	userId = user.id;
+});
+
+afterAll(async () => {
+	conn.close();
 });
 
 test("Make sure it confirms user and clears key in redis", async () => {

@@ -1,5 +1,6 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { request } from "graphql-request";
+import { Connection } from "typeorm";
 
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { invalidLogin, confirmEmailError } from "./errorMessages";
@@ -26,8 +27,14 @@ const loginMutation = (e: string, p: string) => `
 	}
 `;
 
+let conn: Connection;
+
 beforeAll(async () => {
-	await createTypeormConn();
+	conn = await createTypeormConn();
+});
+
+afterAll(async () => {
+	conn.close();
 });
 
 const loginExceptError = async (e: string, p: string, errMsg: string) => {
