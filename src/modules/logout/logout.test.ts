@@ -1,8 +1,8 @@
-// tslint:disable-next-line:no-implicit-dependencies
-import axios from "axios";
 import { Connection } from "typeorm";
+
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { User } from "../../entity/User";
+import { TestClient } from "../../utils/testClient";
 
 let conn: Connection;
 const email = "bob@bob.com";
@@ -25,73 +25,27 @@ afterAll(async () => {
 	conn.close();
 });
 
-const loginMutation = (e: string, p: string) => `
-mutation {
-	login(email: "${e}", password: "${p}") {
-		path
-		message
-	}
-}
-`;
-
-const meQuery = `
-{
-	me {
-		id
-		email
-	}
-}
-`;
-
-const logoutMutation = `
-mutation {
-	logout
-}
-`;
-
 describe("logout", () => {
 	test("test logging out a user", async () => {
-		await axios.post(
-			process.env.TEST_HOST as string,
-			{ query: loginMutation(email, password) },
-			{ withCredentials: true }
-		);
+		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response = await axios.post(
-			process.env.TEST_HOST as string,
-			{
-				query: meQuery
-			},
-			{
-				withCredentials: true
-			}
-		);
+		await client.login(email, password);
+
+		const response = await client.me();
 
 		// login right
-		expect(response.data.data).toEqual({
+		expect(response.data).toEqual({
 			me: {
 				id: userId,
 				email
 			}
 		});
 
-		await axios.post(
-			process.env.TEST_HOST as string,
-			{ query: logoutMutation },
-			{ withCredentials: true }
-		);
+		await client.logout();
 
-		const response2 = await axios.post(
-			process.env.TEST_HOST as string,
-			{
-				query: meQuery
-			},
-			{
-				withCredentials: true
-			}
-		);
+		const response2 = await client.me();
 
 		// logout right
-		expect(response2.data.data.me).toBeNull();
+		expect(response2.data.me).toBeNull();
 	});
 });

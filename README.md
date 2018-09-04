@@ -1,4 +1,4 @@
-https://www.youtube.com/watch?v=pvjOOApb6nk&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V&index=22
+https://www.youtube.com/watch?v=thOHGALZ7WU&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V&index=23
 
 **update all packages "Yarn"**
 - yarn upgrade --latest
