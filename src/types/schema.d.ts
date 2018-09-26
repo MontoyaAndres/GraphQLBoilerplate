@@ -23,12 +23,31 @@ column: number;
 interface IQuery {
 __typename: "Query";
 hello: string | null;
+me: IUser | null;
+}
+
+interface IUser {
+__typename: "User";
+id: string;
+email: string;
 }
 
 interface IMutation {
 __typename: "Mutation";
+sendForgotPasswordEmail: boolean | null;
+forgotPasswordChange: Array<IError>;
 login: Array<IError>;
+logout: boolean | null;
 register: Array<IError>;
+}
+
+interface ISendForgotPasswordEmailOnMutationArguments {
+email: string;
+}
+
+interface IForgotPasswordChangeOnMutationArguments {
+newPassword: string;
+key: string;
 }
 
 interface ILoginOnMutationArguments {

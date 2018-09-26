@@ -36,7 +36,7 @@ describe("logout", () => {
 		await sess2.login(email, password);
 		expect(await sess1.me()).toEqual(await sess2.me());
 		await sess1.logout();
-		expect(await sess1.me()).toEqual(await sess2.me());
+		expect(await sess1.me()).toEqual({ data: { me: null } });
 	});
 
 	test("single session", async () => {
@@ -46,7 +46,6 @@ describe("logout", () => {
 
 		const response = await client.me();
 
-		// login right
 		expect(response.data).toEqual({
 			me: {
 				id: userId,
@@ -58,7 +57,6 @@ describe("logout", () => {
 
 		const response2 = await client.me();
 
-		// logout right
 		expect(response2.data.me).toBeNull();
 	});
 });

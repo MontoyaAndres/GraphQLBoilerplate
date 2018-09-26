@@ -8,7 +8,6 @@ import { createTypeormConn } from "./utils/createTypeormConn";
 import { redis } from "./redis";
 import { genSchema } from "./utils/genSchema";
 import Router from "./routes";
-import { redisSessionPrefix } from "./constants";
 
 const RedisStore = connectRedis(session);
 
@@ -23,11 +22,10 @@ export const startServer = async () => {
 		})
 	});
 
-	server.express.use(Router).use(
+	server.express.use(
 		session({
 			store: new RedisStore({
-				client: redis as any,
-				prefix: redisSessionPrefix
+				client: redis as any
 			}),
 			name: "qid",
 			secret: process.env.SESSION_SECRET as string,
@@ -48,6 +46,8 @@ export const startServer = async () => {
 				? "*"
 				: (process.env.FRONTEND_HOST as string)
 	};
+
+	server.express.use(Router);
 
 	await createTypeormConn();
 
