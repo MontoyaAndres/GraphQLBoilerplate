@@ -67,7 +67,8 @@ Router.get("/confirm/:id", confirmEmail)
 		(request, response) => {
 			(request.session as any).userId = (request.user as any).id;
 			// redirect to frontend
-			response.redirect("/");
+			// https://www.youtube.com/watch?v=fz5TJjU8mek&index=29&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V
+			response.redirect(`${process.env.FRONTEND_HOST}/some-page`);
 		}
 	);
 
