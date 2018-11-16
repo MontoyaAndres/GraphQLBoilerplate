@@ -3,6 +3,10 @@ https://www.youtube.com/watch?v=WXHU3oyTibE&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOq
 **update all packages "Yarn"**
 - yarn upgrade --latest
 
+## Create Twitter App
+
+https://www.youtube.com/watch?v=lKvV_0xZWCg&index=28&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V
+
 ## Errors
 
 Client does not support authentication protocol requested by server; consider upgrading MySQL client'
