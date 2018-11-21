@@ -1,22 +1,24 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import fetch from "node-fetch";
+import * as faker from "faker";
 import * as Redis from "ioredis";
 import { Connection } from "typeorm";
 
 import { createConfimEmailLink } from "./createConfirmEmailLink";
-import { createTypeormConn } from "./createTypeormConn";
-import { User } from "../entity/User";
+import { User } from "../../../entity/User";
+import { createTestConn } from "../../../testSetup/createTestConn";
 
 let userId: string;
 const redis = new Redis();
-
+// create a new thing (not repeat)
+faker.seed(Date.now() + 4);
 let conn: Connection;
 
 beforeAll(async () => {
-	conn = await createTypeormConn();
+	conn = await createTestConn();
 	const user = await User.create({
-		email: "bob5@bob.com",
-		password: "2312312"
+		email: faker.internet.email(),
+		password: faker.internet.password()
 	}).save();
 
 	userId = user.id;

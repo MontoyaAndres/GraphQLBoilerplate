@@ -1,5 +1,3 @@
-https://www.youtube.com/watch?v=qMoDVC38BDk&index=31&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V
-
 **update all packages "Yarn"**
 - yarn upgrade --latest
 
@@ -8,6 +6,12 @@ https://www.youtube.com/watch?v=qMoDVC38BDk&index=31&list=PLN3n1USn4xlky9uj6wOhf
 https://www.youtube.com/watch?v=lKvV_0xZWCg&index=28&list=PLN3n1USn4xlky9uj6wOhfsPez7KZOqm2V
 
 ## Errors
+
+I don't know if that works:
+
+TS_NODE_FILES=true NODE_ENV=test jest --watch --no-cache --runInBand
+
+---
 
 Client does not support authentication protocol requested by server; consider upgrading MySQL client'
 

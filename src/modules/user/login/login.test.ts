@@ -1,17 +1,20 @@
+import * as faker from "faker";
 import { Connection } from "typeorm";
 
-import { createTypeormConn } from "../../utils/createTypeormConn";
 import { invalidLogin, confirmEmailError } from "./errorMessages";
-import { User } from "../../entity/User";
-import { TestClient } from "../../utils/testClient";
+import { User } from "../../../entity/User";
+import { TestClient } from "../../../utils/testClient";
+import { createTestConn } from "../../../testSetup/createTestConn";
 
-const email = "tom@tom.com";
-const password = "sdas";
+// create a new thing (not repeat)
+faker.seed(Date.now() + 1);
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 let conn: Connection;
 
 beforeAll(async () => {
-	conn = await createTypeormConn();
+	conn = await createTestConn();
 });
 
 afterAll(async () => {
@@ -39,7 +42,12 @@ const loginExceptError = async (
 describe("login", () => {
 	test("email not found send back error", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
-		await loginExceptError(client, "bob@bob.com", "sdasdas", invalidLogin);
+		await loginExceptError(
+			client,
+			faker.internet.email(),
+			faker.internet.password(),
+			invalidLogin
+		);
 	});
 
 	test("email not confirmed", async () => {
@@ -50,7 +58,12 @@ describe("login", () => {
 
 		await User.update({ email }, { confirmed: true });
 
-		await loginExceptError(client, email, "asdasdas", invalidLogin);
+		await loginExceptError(
+			client,
+			email,
+			faker.internet.password(),
+			invalidLogin
+		);
 
 		const response = await client.login(email, password);
 

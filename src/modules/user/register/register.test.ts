@@ -1,22 +1,25 @@
 import { Connection } from "typeorm";
+import * as faker from "faker";
 
-import { User } from "../../entity/User";
+import { User } from "../../../entity/User";
 import {
 	duplicateEmail,
 	emailNotLongEnough,
 	invalidEmail,
 	passwordNotLongEnough
 } from "./errorMessages";
-import { createTypeormConn } from "../../utils/createTypeormConn";
-import { TestClient } from "../../utils/testClient";
+import { TestClient } from "../../../utils/testClient";
+import { createTestConn } from "../../../testSetup/createTestConn";
 
-const email: string = "bob2@bob.com";
-const password: string = "121321";
+// create a new thing (not repeat)
+faker.seed(Date.now() + 5);
+const email: string = faker.internet.email();
+const password: string = faker.internet.password();
 
 let conn: Connection;
 
 beforeAll(async () => {
-	conn = await createTypeormConn();
+	conn = await createTestConn();
 });
 
 afterAll(async () => {
@@ -71,7 +74,7 @@ describe("Register user", () => {
 	test("Check bad password", async () => {
 		const client = new TestClient(process.env.TEST_HOST as string);
 
-		const response = await client.register(email, "ad");
+		const response = await client.register(faker.internet.email(), "ad");
 
 		expect(response.data).toEqual({
 			register: [

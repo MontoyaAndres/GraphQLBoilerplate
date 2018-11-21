@@ -1,10 +1,7 @@
-import { ResolveMap } from "../../types/graphql-utils";
-import { removeAllUsersSessions } from "../../utils/removeAllUsersSessions";
+import { ResolveMap } from "../../../types/graphql-utils";
+import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
 
 export const resolvers: ResolveMap = {
-	Query: {
-		hello: () => "hello"
-	},
 	Mutation: {
 		logout: async (_, __, { session, redis }) => {
 			const { userId } = session;

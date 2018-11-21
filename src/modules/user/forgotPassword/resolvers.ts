@@ -1,14 +1,14 @@
 import * as yup from "yup";
 import * as bcrypt from "bcryptjs";
 
-import { ResolveMap } from "../../types/graphql-utils";
-import { User } from "../../entity/User";
-import { GQL } from "../../types/schema";
+import { ResolveMap } from "../../../types/graphql-utils";
+import { User } from "../../../entity/User";
+import { GQL } from "../../../types/schema";
 import { userNotFoundError, expiredKeyError } from "./errorMessages";
-import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
-import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
-import { forgotPasswordPrefix } from "../../constants";
-import { formatYupError } from "../../utils/formatYupError";
+import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
+import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
+import { forgotPasswordPrefix } from "../../../constants";
+import { formatYupError } from "../../../utils/formatYupError";
 import { passwordNotLongEnough } from "../register/errorMessages";
 
 const schema = yup.object().shape({
@@ -19,9 +19,6 @@ const schema = yup.object().shape({
 });
 
 export const resolvers: ResolveMap = {
-	Query: {
-		hello: () => "hello"
-	},
 	Mutation: {
 		sendForgotPasswordEmail: async (
 			_,

@@ -1,17 +1,20 @@
+import * as faker from "faker";
 import { Connection } from "typeorm";
 
-import { createTypeormConn } from "../../utils/createTypeormConn";
-import { User } from "../../entity/User";
-import { TestClient } from "../../utils/testClient";
+import { User } from "../../../entity/User";
+import { TestClient } from "../../../utils/testClient";
+import { createTestConn } from "../../../testSetup/createTestConn";
 
 let conn: Connection;
-const email = "bob@bob.com";
-const password = "sdasdas";
+// create a new thing (not repeat)
+faker.seed(Date.now() + 2);
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 let userId: string;
 
 beforeAll(async () => {
-	conn = await createTypeormConn();
+	conn = await createTestConn();
 	const user = await User.create({
 		email,
 		password,

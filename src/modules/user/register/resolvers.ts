@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
-import { ResolveMap } from "../../types/graphql-utils";
-import { GQL } from "../../types/schema";
-import { User } from "../../entity/User";
-import { formatYupError } from "../../utils/formatYupError";
+import { ResolveMap } from "../../../types/graphql-utils";
+import { GQL } from "../../../types/schema";
+import { User } from "../../../entity/User";
+import { formatYupError } from "../../../utils/formatYupError";
 import {
 	duplicateEmail,
 	emailNotLongEnough,

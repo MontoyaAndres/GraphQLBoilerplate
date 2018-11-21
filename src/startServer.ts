@@ -10,10 +10,16 @@ import { createTypeormConn } from "./utils/createTypeormConn";
 import { redis } from "./redis";
 import { genSchema } from "./utils/genSchema";
 import Router from "./routes";
+import { createTestConn } from "./testSetup/createTestConn";
 
 const RedisStore = connectRedis(session);
 
 export const startServer = async () => {
+	if (process.env.NODE_ENV === "test") {
+		// clean state
+		await redis.flushall();
+	}
+
 	const server = new GraphQLServer({
 		schema: genSchema() as any,
 		context: ({ request }) => ({
@@ -62,7 +68,11 @@ export const startServer = async () => {
 
 	server.express.use(Router);
 
-	await createTypeormConn();
+	if (process.env.NODE_ENV === "test") {
+		await createTestConn(true);
+	} else {
+		await createTypeormConn();
+	}
 
 	const app = await server.start({
 		cors,
